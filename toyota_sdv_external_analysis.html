@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도요타 SDV 외부환경 분석</title>
+<style>
+:root{--bg:#f6f5f2;--ink:#1d2430;--mute:#5d6674;--line:#d6d9de;--head:#1f3a5f;--hl:#fff;--red:#c4161c;--soft:#e9edf3}
+@media (prefers-color-scheme:dark){:root{--bg:#161a21;--ink:#e6e9ee;--mute:#9aa4b2;--line:#323a47;--head:#2f5486;--hl:#1e242d;--red:#ef5a5f;--soft:#222a36}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 "Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+h1{font-size:28px;margin:0 0 6px;line-height:1.3}
+h2{font-size:21px;margin:48px 0 6px;padding-left:12px;border-left:4px solid var(--red)}
+.q{color:var(--mute);margin:0 0 4px}
+.note{font-size:13px;color:var(--mute);margin:0 0 14px}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;background:var(--hl)}
+th{background:var(--head);color:#fff;text-align:left;padding:10px 12px;font-size:14px}
+td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;font-size:14px}
+td.k{font-weight:700;white-space:nowrap;background:var(--soft);width:92px}
+td.k small{display:block;font-weight:400;color:var(--mute);font-size:12px}
+.o{color:#1c7a45;font-weight:700}.t{color:var(--red);font-weight:700}
+tr.c td{background:var(--soft);font-weight:600}
+sup a{color:var(--red);text-decoration:none;font-size:11px}
+.s{white-space:nowrap;font-weight:700}
+.crit{margin-top:12px;padding:12px 14px;background:var(--hl);border:1px solid var(--line);border-left:4px solid var(--red)}
+.env{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.box{background:var(--hl);border:1px solid var(--line);padding:12px;font-size:13.5px}
+.box b{display:block;margin-bottom:4px;font-size:14.5px}
+.core{grid-column:1/-1;text-align:center;padding:18px 12px;background:var(--soft);border:1px solid var(--line)}
+.ring{display:inline-block;padding:14px 26px;border-radius:999px;background:#f2c400;color:#1d2430;font-weight:700}
+.ring em{display:block;font-style:normal;background:#1f3a5f;color:#f2c400;border-radius:999px;padding:6px 18px;margin-top:6px}
+.chips{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chips span{border:1px solid var(--red);color:var(--red);border-radius:4px;padding:2px 9px;font-size:12.5px}
+ol.src{font-size:13px;color:var(--mute);padding-left:22px}
+ol.src a{color:var(--mute)}
+@media (max-width:700px){.env{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>도요타 SDV 전략 – 외부환경 분석</h1>
+<p class="q">중심 질문: 도요타는 제조 혁신(TPS)의 강점을 SDV 시대에도 경쟁우위로 이어갈 수 있는가?</p>
+<p class="note">작성 기준 2026-10-07. 숫자·사실에는 [번호]로 출처를 달았고, 강도(1~5)와 전략적 시사점은 자료를 바탕으로 한 분석(추정)이니 팀 의견에 맞게 조정하세요. 환율·회계연도 표기: FY26 = 2026년 3월 결산.</p>
+
+<h2>1. Your Industry PEST-D(+G)</h2>
+<p class="note">양식의 D=Demographic, G=Global(특정 국제 이벤트)로 해석했습니다. 분석 대상 산업: 글로벌 완성차 / SDV.</p>
+<div class="wrap"><table>
+<tr><th></th><th>PEST-D Factors</th><th>Opportunity / Threat</th><th>Strategic Implication</th></tr>
+<tr><td class="k">P<small>정치·법률</small></td>
+<td>일본 정부(METI·MLIT)의 Mobility DX 전략: 2030·2035년 글로벌 SDV 판매의 30%를 일본 기업이 차지하는 목표<sup><a href="#r8">[8]</a></sup>. 2025년 개정판은 AI 자율주행 투자 가속, 소프트웨어 인력 부족 대응, 기업 간 협력 플랫폼을 담음<sup><a href="#r7">[7]</a></sup>. UNECE R155(사이버보안)·R156(소프트웨어 업데이트)은 64개국에서 형식승인 요건<sup><a href="#r9">[9]</a></sup>.</td>
+<td><span class="o">기회</span> 정부 보조·공동 인프라, 규격 표준화.<br><span class="t">위협</span> OTA를 하려면 업데이트 관리·보안 체계를 수년간 유지해야 하는 규제 부담.</td>
+<td>Arene의 보안·업데이트 관리 체계를 규제 대응 자산으로 만들고, 정부의 공동 개발 플랫폼에 참여해 비용을 분산.</td></tr>
+<tr><td class="k">E<small>경제</small></td>
+<td>FY26 영업이익 3.77조 엔(-21.5%), 영업이익률 7.4%(전년 10.0%). 미국 관세 영향 약 1.38조 엔, 북미는 1,925억 엔 영업적자, R&amp;D는 사상 최대<sup><a href="#r4">[4]</a><a href="#r5">[5]</a></sup>. FY27 영업이익 전망 3조 엔, 손익분기 물량 상승을 도요타 스스로 언급<sup><a href="#r4">[4]</a><a href="#r5">[5]</a></sup>. 중국은 가격 전쟁 속 상위 10개사가 신에너지차 시장의 약 95%<sup><a href="#r13">[13]</a></sup>.</td>
+<td><span class="t">위협</span> 수익성 압박 속에서 SDV·AI 투자를 늘려야 하는 이중 부담.<br><span class="o">기회</span> 전동화 판매 약 600만 대 전망(FY27)<sup><a href="#r4">[4]</a></sup>이 만드는 대규모 물량 기반.</td>
+<td>차종 간 소프트웨어 재사용으로 개발비·손익분기점을 낮추는 것이 핵심. “투자 여력은 줄고 속도 요구는 커지는” 구조.</td></tr>
+<tr><td class="k">S<small>사회·문화</small></td>
+<td>차량 기능이 구매 후에도 좋아지는 ‘성장하는 차’가 소비자 기대로 부상: 도요타도 RAV4를 고객과 함께 성장하는 차의 출발점으로 소개<sup><a href="#r2">[2]</a></sup>. BYD 창업자는 자율주행이 몇 년 내 안전벨트·에어백처럼 필수가 될 것이라 발언<sup><a href="#r14">[14]</a></sup>. 데이터 수집은 운전자 동의가 전제<sup><a href="#r1">[1]</a></sup>.</td>
+<td><span class="t">위협</span> 소프트웨어 경험(음성·화면·ADAS)이 구매 기준이 되면 ‘품질 좋은 하드웨어’만으로는 부족.<br><span class="o">기회</span> 도요타 브랜드의 신뢰·안전 이미지.</td>
+<td>‘안전하고 믿을 수 있는 업데이트’를 도요타식 SDV 가치로 포지셔닝. 데이터 동의·프라이버시 설계를 차별점으로.</td></tr>
+<tr><td class="k">T<small>기술</small></td>
+<td>Arene가 신형 RAV4에 첫 적용: 음성비서·센터 디스플레이·TSS 4.0 개발에 사용, 가상 시뮬레이션으로 실차 시제품 의존을 줄임<sup><a href="#r1">[1]</a><a href="#r3">[3]</a></sup>. 하드웨어 없이 통합 테스트 가능<sup><a href="#r20">[20]</a></sup>. NVIDIA DRIVE AGX·DriveOS 기반 L2++ 개발, 안전 코드용 AI 코딩 어시스턴트, 공장 디지털 트윈<sup><a href="#r10">[10]</a></sup>. BYD는 ‘God’s Eye’ 자율주행을 21개 이상 모델(1만 달러 미만 포함)에 확대<sup><a href="#r14">[14]</a></sup>.</td>
+<td><span class="o">기회</span> 개발 속도·재사용성 향상, AI로 소프트웨어 생산성 제고.<br><span class="t">위협</span> 경쟁사는 이미 저가 모델까지 첨단 ADAS 탑재. 도요타의 SDV 플랫폼은 2025년에야 양산차 도달<sup><a href="#r11">[11]</a></sup>.</td>
+<td>Arene를 ‘공통 개발·검증 엔진’으로 못 박고, 외부 기술(NVIDIA·Waymo)은 파트너로 결합하는 하이브리드 전략.</td></tr>
+<tr><td class="k">D<small>인구</small></td>
+<td>일본 65세 이상 인구 비중 29.4%(2025, 역대 최고)<sup><a href="#r18">[18]</a></sup>, 생산가능인구(15~64세) 59.6%<sup><a href="#r19">[19]</a></sup>. 2040년 일본 노동력 1,100만 명 이상 부족 전망<sup><a href="#r18">[18]</a></sup>.</td>
+<td><span class="o">기회</span> 고령 운전자의 안전·운전 보조 수요.<br><span class="t">위협</span> 소프트웨어 인력과 공장 인력 동시 부족.</td>
+<td>인력난은 자동화·AI 코딩 도구, 글로벌 개발 거점(Woven by Toyota의 해외 채용)으로 상쇄<sup><a href="#r20">[20]</a></sup>.</td></tr>
+<tr><td class="k">G<small>국제 이벤트</small></td>
+<td>미·일 합의로 일본산 자동차 관세 27.5%→15%<sup><a href="#r6">[6]</a></sup>이지만 FY27에도 관세·중동 관련 비용 부담 예상(중동 영향 공급망 4,000억 엔, 마케팅 2,700억 엔)<sup><a href="#r4">[4]</a></sup>. 중국 EV 업체의 수출 확대(지리 EV 수출 4배)<sup><a href="#r22">[22]</a></sup>.</td>
+<td><span class="t">위협</span> 지정학·무역 변수로 인한 투자 계획 불확실성.</td>
+<td>현지 생산·현지 조달 확대, 소프트웨어는 지역 공통 플랫폼 + 지역별 기능 조정 구조.</td></tr>
+<tr class="c"><td>Conclusion</td><td colspan="3">기술(T)·사회(S)·정책(P)은 SDV 전환을 재촉하고, 경제(E)·국제(G)는 투자 여력을 깎는다. 따라서 도요타는 ‘빨리 따라잡기’보다 ‘재사용·표준화로 효율적으로 속도를 내는’ 방식이 유리하다. 이는 제조에서 쌓은 표준화·지속 개선(TPS) 역량을 소프트웨어로 확장한다는 프로젝트 논지와 맞닿아 있다.</td></tr>
+</table></div>
+
+<h2>2. Five Forces 모델의 적용</h2>
+<p class="note">강도는 1(약함)~5(강함)로, 자료를 근거로 한 추정입니다.</p>
+<div class="wrap"><table>
+<tr><th></th><th>Who</th><th>Current Situation</th><th>Strength</th><th>Strategic Implication</th></tr>
+<tr><td class="k">Rivals</td><td>Tesla, BYD, Xiaomi·Huawei 연합 차량, VW 등 레거시 OEM</td><td>중국은 가격 전쟁 지속, Huawei 소프트웨어 탑재 차량과 Xiaomi는 판매 90% 이상 급증<sup><a href="#r13">[13]</a></sup>. VW는 자체 소프트웨어 조직 CARIAD의 지연·손실 끝에 Rivian JV로 선회했고 JV도 일정 지연 보도<sup><a href="#r15">[15]</a><a href="#r16">[16]</a></sup>.</td><td class="s">5</td><td>속도와 비용 모두에서 경쟁. VW 사례는 ‘돈을 쏟아도 소프트웨어 역량은 바로 안 생긴다’는 반면교사.</td></tr>
+<tr><td class="k">Suppliers</td><td>NVIDIA(DRIVE AGX·DriveOS), Qualcomm·Renesas 등 반도체, Denso 등 그룹 계열사</td><td>NVIDIA와 협력이 차량·개발도구·공장으로 확대<sup><a href="#r10">[10]</a></sup>. Woven by Toyota가 Denso 등과 소프트웨어 구현 협력 강화, 소프트웨어 개발센터에 Denso CTO 영입<sup><a href="#r17">[17]</a></sup>.</td><td class="s">4</td><td>한 공급사 의존이 깊어지는 위험. Arene의 추상화 계층으로 교체 가능성(멀티벤더)을 유지해야 함.</td></tr>
+<tr><td class="k">Buyers</td><td>글로벌 개인 고객, 중국 소비자, 딜러·플릿</td><td>중국은 가격 인하 경쟁으로 소비자 협상력이 큼<sup><a href="#r13">[13]</a></sup>. 소프트웨어 기능 기대가 구매 기준으로 확대(S 참고).</td><td class="s">4</td><td>지역별로 차등 대응: 선진국은 안전·신뢰 중심, 중국은 UX·가격 대응.</td></tr>
+<tr><td class="k">New Entrants</td><td>Xiaomi 등 IT 기업, 중국 EV 업체의 해외 진출</td><td>Geely EV 수출 4배, BYD는 저가 모델까지 첨단 ADAS 확대<sup><a href="#r22">[22]</a><a href="#r14">[14]</a></sup>. 다만 규제(R155·R156)와 생산 규모가 진입 장벽<sup><a href="#r9">[9]</a></sup>.</td><td class="s">4</td><td>도요타의 품질·글로벌 생산망·딜러망을 장벽으로 활용, 소프트웨어 경험으로 격차 축소.</td></tr>
+<tr><td class="k">Substitutes</td><td>로보택시·차량호출(Waymo, Apollo Go), 대중교통</td><td>중국의 Apollo Go가 카자흐스탄 업체와 제휴해 중앙아시아로 진출<sup><a href="#r21">[21]</a></sup>. 도요타는 Waymo와 개인차용 자율주행 협력을 비구속적 합의로 탐색<sup><a href="#r12">[12]</a></sup>.</td><td class="s">2</td><td>단기 위협은 낮으나 장기적으로 ‘소유→서비스’ 이동 가능. 대체재를 파트너로 바꾸는 접근 필요.</td></tr>
+<tr><td class="k">Complementors</td><td>NVIDIA, Waymo, Apple CarPlay·Android Auto, 충전·클라우드·앱 개발사, 정부 Mobility DX 플랫폼</td><td>신형 RAV4는 무선 CarPlay·Android Auto를 표준 지원<sup><a href="#r3">[3]</a></sup>. NVIDIA·Waymo 협력은 아직 일정·투자액 미공개<sup><a href="#r11">[11]</a></sup>.</td><td class="s">3</td><td>외부 생태계를 흡수하되 핵심 차량 제어·데이터 권한은 Arene에서 유지.</td></tr>
+</table></div>
+<div class="crit"><b>Which force is most critical?</b> Rivals(경쟁 강도)입니다. 중국·미국 업체가 소프트웨어 중심 제품을 이미 낮은 가격에 내놓아 도요타의 개발 속도와 수익성을 동시에 압박하고, 다른 힘(공급사 의존, 구매자 협상력, 신규 진입)도 결국 이 경쟁 압력에서 파생됩니다. 두 번째는 Suppliers(반도체·AI 컴퓨팅 의존)입니다.</div>
+
+<h2>3. General External Environment</h2>
+<p class="note">제공해 주신 도식 구조 그대로, 바깥 6개 영역과 중심의 산업 내 5+1 힘으로 정리했습니다.</p>
+<div class="env">
+<div class="box"><b>Specific International Events</b>미국 관세(미·일 합의 15%)<sup><a href="#r6">[6]</a></sup>, 중동 관련 비용<sup><a href="#r4">[4]</a></sup>, 중국 EV 수출 확대<sup><a href="#r22">[22]</a></sup></div>
+<div class="box"><b>Technological Change</b>SDV·중앙집중형 아키텍처, AI 자율주행(L2++), 시뮬레이션 개발<sup><a href="#r1">[1]</a><a href="#r10">[10]</a></sup></div>
+<div class="box"><b>Demographic Trends</b>65세 이상 29.4%, 생산가능인구 59.6%, 2040년 노동력 1,100만 명 부족 전망<sup><a href="#r18">[18]</a><a href="#r19">[19]</a></sup></div>
+<div class="core"><span class="ring">Industry<em>Focal Firm: Toyota</em></span>
+<div class="chips"><span>Rivalry</span><span>New Entry</span><span>Suppliers</span><span>Buyers</span><span>Substitutes</span><span>Complementors</span></div></div>
+<div class="box"><b>Legal / Political Conditions</b>Mobility DX 전략(SDV 30% 목표)<sup><a href="#r8">[8]</a></sup>, UN R155·R156<sup><a href="#r9">[9]</a></sup></div>
+<div class="box"><b>Economic Climate</b>영업이익률 7.4%, 북미 적자, FY27 영업이익 3조 엔 전망, 중국 가격 전쟁<sup><a href="#r4">[4]</a><a href="#r5">[5]</a><a href="#r13">[13]</a></sup></div>
+<div class="box"><b>Cultural Trends</b>구매 후에도 진화하는 차, 자율주행의 필수화, 데이터 동의 중시<sup><a href="#r1">[1]</a><a href="#r14">[14]</a></sup></div>
+</div>
+
+<h2>4. 발표용 한 줄 요약</h2>
+<p>외부환경은 도요타에게 “속도를 높여라”(T·S·P·Rivals)와 “돈은 줄었다”(E·G)를 동시에 요구한다. 그래서 답은 Arene로 개발을 표준화·재사용해 비용을 낮추고, 파트너와 결합해 속도를 확보하면서, 도요타의 강점인 품질·신뢰를 소프트웨어 업데이트에도 이어가는 것이다.</p>
+
+<h2>출처</h2>
+<ol class="src">
+<li id="r1"><a href="https://www.whichcar.com.au/?p=660891">WhichCar – 2026 RAV4와 Arene</a></li>
+<li id="r2"><a href="https://toyotatimes.jp/en/toyota_news/1077_2.html">Toyota Times – RAV4 월드 프리미어</a></li>
+<li id="r3"><a href="https://autoinformed.com/?p=98935">AutoInformed – 2026 RAV4 데뷔(Arene·멀티미디어)</a></li>
+<li id="r4"><a href="https://www.just-auto.com/news/toyota-operating-profits-drop-21-5/">just-auto – Toyota FY26 결산, FY27 전망</a></li>
+<li id="r5"><a href="https://finance.yahoo.com/markets/stocks/articles/toyota-fy2026-earnings-miss-u-112836495.html">Yahoo Finance – Toyota FY2026 실적</a></li>
+<li id="r6"><a href="https://www.theglobeandmail.com/business/article-toyota-95-billion-us-tariff-profit-estimate">Globe and Mail – 관세와 15% 합의</a></li>
+<li id="r7"><a href="https://www.meti.go.jp/english/press/2025/0609_001.html">METI – Mobility DX Strategy 2025 개정</a></li>
+<li id="r8"><a href="https://www.meti.go.jp/english/press/2024/0524_002.html">METI – Mobility DX Strategy(2024)</a></li>
+<li id="r9"><a href="https://trustonic.com/?p=18325">Trustonic – UN R155·R156 개요</a></li>
+<li id="r10"><a href="https://roboticsandautomationnews.com/2026/07/18/toyota-and-nvidia-expand-partnership-to-develop-ai-for-vehicles-factories-and-cities/">Robotics &amp; Automation News – Toyota·NVIDIA 협력 확대</a></li>
+<li id="r11"><a href="https://theweeklydriver.com/2026/07/toyota-nvidia-partnership-2026-factories/">The Weekly Driver – NVIDIA 협력 분석</a></li>
+<li id="r12"><a href="https://driveteslacanada.ca/news/waymo-and-toyota-team-up-to-explore-autonomous-driving-for-personal-vehicles/">Waymo–Toyota 예비 파트너십</a></li>
+<li id="r13"><a href="https://www.idnfinancials.com/news/60037/perang-harga-tekan-ev-china-2026-jadi-ujian-bertahan-hidup">IDN Financials(CNBC 인용) – 중국 EV 가격 전쟁</a></li>
+<li id="r14"><a href="https://www.thestandard.com.hk/china/article/227287/Chinese-auto-giant-BYD-to-integrate-DeepSeek-broaden-self-driving-tech">The Standard – BYD 자율주행 확대</a></li>
+<li id="r15"><a href="https://www.evmagazine.eu/cariad-75b-losses-strategic-rivian-partnership-vws-software-division-transforms">EV Magazine – CARIAD와 Rivian 파트너십</a></li>
+<li id="r16"><a href="https://www.automotiveworld.com/articles/manager-magazin-tensions-brewing-over-vw-rivian-software-jv/">Automotive World – VW·Rivian JV 지연</a></li>
+<li id="r17"><a href="https://toyotatimes.jp/en/toyota_news/1045.html">Toyota Times – Woven by Toyota 완전자회사화</a></li>
+<li id="r18"><a href="https://news.tuoitre.vn/japans-elderly-population-down-at-3619mn-103250915155108655.htm">Tuoi Tre – 일본 고령 인구 29.4%</a></li>
+<li id="r19"><a href="https://www.newsonair.gov.in/japan-records-sharpest-population-decline-labour-shortage-deepens-amid-ageing-crisis">News On AIR – 일본 인구·생산가능인구</a></li>
+<li id="r20"><a href="https://woven.toyota/en/our-latest/in-the-spotlight-kenji-engineering-team-lead-arene">Woven by Toyota – Arene 팀 인터뷰</a></li>
+<li id="r21"><a href="https://english.news18a.com/news/english_275962.html">News18a – Apollo Go 중앙아시아 진출 소식(해당 페이지 하단 기사)</a></li>
+<li id="r22"><a href="https://www.mexc.com/it-IT/news/372841">MEXC(CNBC 2025-12-30 기사 전재) – 중국 EV 시장·지리 수출</a></li>
+</ol>
+</main>
+</body>
+</html>
